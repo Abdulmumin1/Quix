@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Quix{% endblock %}
+
+{% block content %}
+<div class=" border shadow-lg rounded-3 p-5 w-100 bg-dark mt-3">
+	<div class="row">
+		<div class="col-lg text-light ">
+			
+			<p>
+				{{ qs }}
+			</p>
+			
+		</div>
+
+		<div class="col">
+			<form method="POST" class=" d-flex flex-column">
+				{% for option in ans %}
+				<input type="submit"  value="{{ option }}" name="a" class='btn btn-info mb-3'>
+				{% endfor %}
+			</form>
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}

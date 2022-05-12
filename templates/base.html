@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% block title %}Yo{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<style type="text/css">
+body{
+	display: flex;
+	align-items: center;
+}
+@media (max-width: 700px){
+	.logo{
+		width: 35%;
+		height: 35%;
+	}
+}
+</style>
+</head>
+<body class="d-flex flex-column">
+
+<nav class="navbar navbar-expand navbar-light border-bottom shadow-sm darkable w-100" style="margin-bottom: 16px; font-size:16px;">
+	<div class="container-fluid">
+		<a href="#" class="navbar-brand"><img class='rounded-circle py-2 bg-body logo shadow-sm' src="{{url_for('static', filename='assets/logo.png')}}" width="50%" height="50%" /></a>
+		<div class='nav nav-pills'>
+			<ul class="navbar-nav me-auto">
+				{% if username %}
+
+
+				<li class="nav-item">
+					<a href="{{url_for('dashboard')}}" class="nav-link btn btn-danger bg-danger">Quit</a>
+				</li>
+				<li class="nav-item">
+					<a href="#" class="nav-link">
+						<i >{{username}}</i>
+					</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+
+	</div>
+</nav>
+
+
+<main class="container">
+	{% block content %}
+
+	{% endblock %}	
+</main>
+
+</body>
+</html>
