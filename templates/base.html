@@ -9,6 +9,15 @@ body{
 	display: flex;
 	align-items: center;
 }
+.rounded-3{
+	border-radius: 15px !important;
+}
+.share{
+	position: absolute;
+	top: 13px;
+	right:3rem;
+}
+
 @media (max-width: 700px){
 	.logo{
 		width: 35%;
@@ -21,7 +30,7 @@ body{
 
 <nav class="navbar navbar-expand navbar-light border-bottom shadow-sm darkable w-100" style="margin-bottom: 16px; font-size:16px;">
 	<div class="container-fluid">
-		<a href="#" class="navbar-brand"><img class='rounded-circle py-2 bg-body logo shadow-sm' src="{{url_for('static', filename='assets/logo.png')}}" width="50%" height="50%" /></a>
+		<a href="#" class="navbar-brand"><img class='rounded-pill py-2 bg-body logo shadow-sm' src="{{url_for('static', filename='assets/logo.png')}}" width="50%" height="50%" /></a>
 		<div class='nav nav-pills'>
 			<ul class="navbar-nav me-auto">
 				{% if username %}
