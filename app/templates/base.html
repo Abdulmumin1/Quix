@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}Yo{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<style type="text/css">
+body{
+	display: flex;
+	align-items: center;
+}
+.rounded-3{
+	border-radius: 15px !important;
+}
+.share{
+	position: absolute;
+	top: 13px;
+	right:3rem;
+}
+.ml1{
+	/* for contribute buttons*/
+	margin-left: 10px;
+}
+.mr1{
+	margin-right: 10px;
+}
+
+#options{
+	flex-direction: row;
+}
+@media (max-width: 700px){
+	.logo{
+		width: 35%;
+		height: 35%;
+	}
+	#options{
+		flex-direction: column;
+	}
+	.ml1{
+		margin-left: 0;
+		margin-top: 10px;
+	}
+	.mr1{
+		margin-right: 0;
+		margin-bottom:10px ;
+	}
+}
+</style>
+</head>
+<body class="d-flex flex-column">
+
+<nav class="navbar navbar-expand navbar-light border-bottom darkable w-100" style="margin-bottom: 16px; font-size:16px;">
+	<div class="container-fluid">
+		<a href="#" class="navbar-brand"><img class='rounded-pill py-2 bg-body logo shadow-sm' src="{{url_for('static', filename='assets/logo.png')}}" width="50%" height="50%" /></a>
+		<div class='nav nav-pills'>
+			<ul class="navbar-nav me-auto">
+				{% block nav %}
+				<li class="nav-item">
+					<a href="{{url_for('main.contribute')}}" class="nav-link">
+						Contribute
+					</a>
+				</li>
+				{% endblock nav%}
+			</ul>
+		</div>
+
+	</div>
+</nav>
+
+
+<main class="container">
+	{% block content %}
+
+	{% endblock %}	
+</main>
+
+
+
+</body>
+
+
+</html>
