@@ -126,7 +126,7 @@ class UserObject(QuestionHandler):
 
 
 def update_json(question, answer, options):
-
+    "add questions to json file|"
     # if not os.path.exists('questions_under_review.json'):
     #     jo = {"1": {"question": "who is the author?", "answer": "abdulmumin",
     #                 "options": ["abdulmumin", "ismail", "misbahu", "rahma", "kabir"]}}
