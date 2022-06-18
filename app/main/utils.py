@@ -2,6 +2,7 @@
 import random
 import os
 import json
+import secrets
 
 
 class QuestionHandler():
@@ -17,11 +18,12 @@ class QuestionHandler():
         self.answered_questions = []
 
     def random_question(self):
+        random.shuffle(self.all_questions)
         if len(self.answered_questions) >= 10:
             return
         if not self.all_questions:
             return
-        question = random.choice(self.all_questions)
+        question = secrets.choice(self.all_questions)
         self.all_questions.remove(question)
         return question
 
@@ -71,25 +73,42 @@ class UsersHandler:
     def __init__(self, session):
         self.session = session
         self.users = {}
+        self.used_keys = set()
 
     def get_user(self):
-        username = self.session.get('username')
-        if not self.users and username:
-            self.session.pop('username')
+        id_ = self.session.get('key')
+        if not id_:
             return
-        return self.users[username]
+        if not self.users and id_:
+            self.session.pop('username')
+            # self.session.pop('key')
+            return
+        return self.users[id_]
 
     def add_user(self):
-        id_ = self.session.get('username')
-        self.users[id_] = UserObject(id_)
+        username = self.session.get('username')
+        id_ = self.shorten()
+        self.session['key'] = id_
+        self.users[id_] = UserObject(username)
 
     def reset_user(self):
-        id_ = self.session.get('username')
-        self.users[id_] = UserObject(id_)
+        username = self.session.get('username')
+        id_ = self.session.get('key')
+        self.users[id_] = UserObject(username)
 
     def discard_user(self):
-        del self.users[self.session.get('username')]
+        id_ = self.session.get('key')
+        del self.users[id_]
         self.session.pop('username')
+        self.used_keys.remove(id_)
+
+    def shorten(self, nbytes: int = 5) -> str:
+        ext = secrets.token_urlsafe(nbytes=nbytes)
+        if ext in self.used_keys:
+            return self.shorten(nbytes=nbytes)
+        else:
+            self.used_keys.add(ext)
+            return ext
 
 
 class UserObject(QuestionHandler):
@@ -113,7 +132,7 @@ def update_json(question, answer, options):
     #                 "options": ["abdulmumin", "ismail", "misbahu", "rahma", "kabir"]}}
     #     jf = json.dump(jo, open('questions.json', 'w'))
 
-    json_file = json.load(open("questions.json", "r"))
+    json_file = json.load(open("questions_under_review.json", "r"))
     last_number = list(json_file.keys())[-1]
 
     options = list(map(lambda x: x.title(), options))
