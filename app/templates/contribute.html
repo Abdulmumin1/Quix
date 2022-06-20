@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+{% if not qs %}
+<section>
+    <form method="post" class="container shadow-lg p-3 rounded-3">
+        <div class="d-flex justify-content-between">
+            <h2>Contribute</h2>
+            <input type="submit" value="submit" class="btn btn-info mb-3"/>
+        </div>
+        <textarea required type="text" name="question" class="form-control mb-3" placeholder="Question"></textarea>
+        <div class="d-flex" id="options">
+        <input class="form-control mr1" name="a" required placeholder="Answer"/>
+        <input class="form-control mr1" name="b" required placeholder="Option 2"/>
+        <input type="button" value="add" class="btn btn-info ml1 w-100" onclick="addOption()"/>
+        </div>
+    </form>
+</section>
+
+<script>
+let count = 2;
+let names = ['a','b','c','d']
+const addOption = () => {
+    
+    let optionsDiv = document.getElementById('options');
+    if (optionsDiv.children.length == 5 ){
+        return;
+    }
+    let elementName = names[count]
+    count ++;
+    let newElement = document.createElement('input');
+    newElement.classList = ['form-control mr1']
+    
+    newElement.placeholder = `Option ${count}`
+    newElement.name = elementName
+    
+
+    optionsDiv.insertBefore(newElement, optionsDiv.lastElementChild)
+}
+</script>
+
+
+{% else %}
+
+<aside>
+<div class=" border-3 shadow-lg rounded-3 p-5 w-100 bg-body my-3 position-relative">
+	<div class="row">
+		<div class="col-lg ">
+			<span class="badge p-2 rounded-2 bg-info share text-dark ">
+				<a class="text-decoration-none text-dark " target="_" href="https://twitter.com/intent/tweet?text={{qs}}"> Tweet</a>
+			</span>
+			<p id="question" class="my-0 py-2 mx-0">
+				{{ qs }}
+			</p>
+		</div>
+
+		<div class="col">
+			<div class=" d-flex flex-column">
+				{% for option in ans %}
+				    
+					{% if option != ""%}
+				<input type="button"  value="{{ option }}" name="a" class='btn btn-info mb-3 answer-button'>
+					{% endif %}
+				{% endfor %}
+            </div>
+
+		</div>
+	</div>
+    <p class="text-center ">Held for review.</p>
+</div>
+
+<p class="text-center">You are the best 😍.</p>
+</aside>
+
+
+{% endif %}
+{% endblock content %}
