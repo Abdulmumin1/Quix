@@ -20,7 +20,7 @@
 <div class=" border-3 shadow-lg rounded-card p-5 w-100 bg-body my-3 position-relative">
 	<div class="row">
 		<div class="col-lg text-light ">
-			<span class="badge p-2 rounded-pill bg-info share text-dark ">
+			<span class="badge p-2 share text-dark ">
 				<a class="text-decoration-none text-dark " target="_" href="https://twitter.com/intent/tweet?text={{qs}}"> Tweet</a>
 			</span>
 			<p id="question" class="my-0 py-2 mx-0 text-dark">
@@ -29,14 +29,14 @@
 		</div>
 
 		<div class="col">
-			<form method="POST" class=" d-flex flex-column">
+			<div  class=" d-flex flex-column" id="button_area">
 				{% for option in ans %}
 				    
 					{% if option != ""%}
-				<input type="submit"  value="{{ option }}" name="a" class='btn btn-info mb-3 rounded-card'>
+				<input type="submit" onclick="submit_question('{{ option }}')" value="{{ option }}" name="a" class='btn btn-info mb-3 rounded-card'>
 					{% endif %}
 				{% endfor %}
-			</form>
+			</div>
 
 		</div>
 	</div>
@@ -45,15 +45,12 @@
 
 
 <div class="container shadow-lg bg-light m-auto position-relative rounded-card px-3 d-flex justify-content-between" style="width: 40%;padding-top: 12px;">
-	<p class="display-6 text-success">{{ansd_len}}</p>
-	<p class="display-6 text-danger">{{q_len}}</p>
+	<p class="display-6 text-success" id="answered">{{ansd_len}}</p>
+	<p class="display-6 text-danger" id="total_question">{{q_len}}</p>
 </div>
 
 </div>
-<script type="text/javascript">
-	const tweet_question = () => {
-		let text = document.getElementById('question');
-		console.log(text.innerText);
-	}
+<script type="text/javascript" src="{{url_for('static', filename='js/handler.js')}}">
+	
 </script>
 {% endblock %}

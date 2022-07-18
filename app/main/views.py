@@ -1,5 +1,5 @@
 from . import main
-from flask import render_template, session, redirect, url_for, request, session
+from flask import render_template, session, redirect, jsonify, url_for, request, session
 from .utils import UsersHandler, update_json
 
 users = UsersHandler(session)
@@ -54,6 +54,37 @@ def questions():
                            username=handler.username,
                            q_len=total_questions,
                            ansd_len=answered_questions_len)
+
+
+@main.route('/quiz/submit', methods=["POST"])
+def new_question():
+    print(request.json)
+    handler = users.get_user()
+    answer = request.json.get('value')
+    correct_answer = handler.question_answer()
+    print(answer, correct_answer)
+    if answer.lower() == correct_answer.lower():
+        handler.score += 1
+    else:
+        handler.failed += 1
+
+    handler_object = {}
+    handler_object['question'] = handler.previous_question.question
+    handler_object['options'] = handler.previous_question_options
+    handler_object['correct_answer'] = correct_answer
+    handler_object['picked_answer'] = answer
+
+    handler.answered_questions.append(handler_object)
+    handler.previous_question_answered = True
+
+    question_answer = handler.get_question()
+
+    if not question_answer:
+        return redirect(url_for('main.dashboard'))
+    question, answer = question_answer
+    total_questions, answered_questions_len = handler.progress_()
+
+    return jsonify({"qs": question, "ans": answer, "q_len": total_questions, "ansd_len": answered_questions_len})
 
 
 @main.route('/dashboard', methods=["GET", "POST"])

@@ -1,33 +1,58 @@
-class Handler{
-	constructor(all_qs){
-		this.all_questions = all_qs
-		this.previous_question = null
-		this.previous_question_answered = false
-		this.question_answers = new Array();
-		this.score = 0
-		this.failed = 0
-		this.answered_questions = new Array();
-	}
-	
-	get_question(){
+const submit_question = (value) => {
+  let url = window.location.href + "/submit";
+  console.log(value);
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(
+    JSON.stringify({
+      value: value,
+    })
+  );
+  xhr.onreadystatechange = function () {
+    // If the request completed, close the extension popup
+    if (xhr.readyState == 4)
+      if (xhr.status == 200) {
+        let json_data = xhr.responseText;
+        json_data = JSON.parse(json_data);
+        console.log(json_data);
+        let question = json_data["qs"];
+        let ansd_len = json_data["ansd_len"];
+        let q_len = json_data["q_len"];
+        let answers = json_data["ans"];
+        console.log(answers);
+        display_new_qestion(question, ansd_len, q_len, answers);
+      }
+  };
+};
 
-		let random_index = Math.floor(Math.random() * this.all_questions.length);
-		question = this.all_questions[random_index]
-		
-		return question
-	}
+const display_new_qestion = (q, ansd_len, q_len, answers) => {
+  let q_label = document.getElementById("question");
 
-	get_answer(){
-		let answer_buttons = document.getElementsClassName('answer-button');
-		for(let i=0; i < answer_buttons.length; i++){
-			answer_buttons[i].addEventListener("click");
-		}
-	}
+  let answered = document.getElementById("answered");
+  let total_question = document.getElementById("total_question");
+  let button_div = document.getElementById("button_area");
+  button_div.innerHTML = "";
 
+  q_label.innerText = q;
+  answered.innerText = ansd_len;
+  total_question.innerText = q_len;
+  for (let i = 0; i < answers.length; i++) {
+    console.log(answers[i]);
+    if (answers[i]) {
+      let button = create_button(answers[i]);
+      button_div.appendChild(button);
+    }
+  }
+};
 
-	store_info(){
-		let json_object = {};
-		json_object["all_questions"] = this.all_questions
-		json_object[""]
-	}
-}
+const create_button = (data) => {
+  let button = document.createElement("input");
+  button.value = data;
+  button.type = "submit";
+  button.addEventListener("click", function () {
+    submit_question(data);
+  });
+  button.classList = "btn btn-info mb-3 rounded-card";
+  return button;
+};
