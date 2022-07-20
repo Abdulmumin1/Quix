@@ -137,7 +137,8 @@ def update_json(question, answer, options):
 
     options = list(map(lambda x: x.title(), options))
     options.append(answer)
-    print(json_file)
+    print(question, answer, options)
+    # print(json_file)
     new = int(last_number)+1
     json_object = {}
     json_object["question"] = question.capitalize()

@@ -80,7 +80,7 @@ def new_question():
     question_answer = handler.get_question()
 
     if not question_answer:
-        return redirect(url_for('main.dashboard'))
+        return jsonify({"redirect": True})
     question, answer = question_answer
     total_questions, answered_questions_len = handler.progress_()
 

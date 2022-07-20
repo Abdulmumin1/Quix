@@ -5,18 +5,18 @@
 {% block nav %}
 
 	<li class="nav-item">
-		<a href="{{url_for('main.dashboard')}}" class="nav-link btn bg-light text-danger">Quit</a>
+		<a href="{{url_for('main.dashboard')}}" class="nav-link btn text-danger">Quit</a>
 	</li>
 	<li class="nav-item">
 		<a href="#" class="nav-link">
-			<i class="bg-light p-2 rounded-2">{{username}}</i>
+			<i class="p-2 rounded-2">{{username}}</i>
 		</a>
 	</li>
 				
 {% endblock nav%}
 
 {% block content %}
-<div class="d-flex flex-column mb-3"> 
+<div class="d-flex flex-column mb-3" id="quiz_area"> 
 <div class=" border-3 shadow-lg rounded-card p-5 w-100 bg-body my-3 position-relative">
 	<div class="row">
 		<div class="col-lg text-light ">
@@ -48,6 +48,23 @@
 	<p class="display-6 text-success" id="answered">{{ansd_len}}</p>
 	<p class="display-6 text-danger" id="total_question">{{q_len}}</p>
 </div>
+
+<!-- Waves starts here -->
+<div style="border-bottom-right-radius:25px; border-bottom-left-radius:25px;overflow:hidden;">
+<svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+<defs>
+<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+</defs>
+<g class="parallax">
+<use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(49, 210, 242, 0.7)" />
+<use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(49, 210, 242, 0.5)" />
+<use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 210, 242, 0.3)" />
+<use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(49, 210, 242, 0.1)" />
+</g>
+</svg>
+</div>
+<!--Waves end-->
 
 </div>
 <script type="text/javascript" src="{{url_for('static', filename='js/handler.js')}}">
