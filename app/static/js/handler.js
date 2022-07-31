@@ -49,6 +49,7 @@ const submit_question = (value) => {
         setTimeout(function () {
           display_new_qestion(question, ansd_len, q_len, answers);
         }, 100);
+        window.location.assign("#quiz_area");
       }
   };
 };
