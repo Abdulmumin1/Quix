@@ -1,1 +1,1 @@
-web: export FLASK_APP=quix.py && flask run
+web: gunicorn wsgi:app
