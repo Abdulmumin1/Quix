@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 
 {% block title %}Quix{% endblock %}
-
-{% block content %}
-<head>
-  <title>Your Title</title>
+{% block head %}
+  <!-- <title>Your Title</title> -->
   <meta property="og:title" content="quix">
   <meta name="twitter:title" content="quix">
   
@@ -14,7 +12,9 @@
   
   <meta property="og:image" content="{{url_for('static', filename='assets/med.jpg')}}">
   <meta name="twitter:image" content="{{url_for('static', filename='assets/med.jpg')}}">
-</head>
+
+{% endblock %}
+{% block content %}
 
 <div class="container d-flex flex-column shadow-lg rounded-3 w-100 p-3 mt-5 bg-body">
 	<img class="mx-auto" src="{{url_for('static', filename='assets/med.jpg')}}" width="50%" height="50%"/>
