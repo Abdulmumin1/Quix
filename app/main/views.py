@@ -1,8 +1,8 @@
 from . import main
 from flask import render_template, session, redirect, jsonify, url_for, request, session
-from .utils import UsersHandler, update_json
+from .utils import UsersHandler, update_json, QuestionHandler
 
-users = UsersHandler(session)
+users = UsersHandler()
 
 
 @main.route('/', methods=["GET", "POST"])
@@ -22,27 +22,30 @@ def index():
 
 @main.route('/quiz', methods=["GET", "POST"])
 def questions():
-    handler = users.get_user()
+    handler = QuestionHandler()
 
     if not handler:
         return redirect(url_for('main.index'))
+
     if request.method == 'POST':
         answer = request.form.get('a')
         correct_answer = handler.question_answer()
         print(answer, correct_answer)
         if answer.lower() == correct_answer.lower():
-            handler.score += 1
+            print('Good')
+            # session['scored'] += 1
         else:
-            handler.failed += 1
+            print('bad')
+            # handler.failed += 1
 
-        handler_object = {}
-        handler_object['question'] = handler.previous_question.question
-        handler_object['options'] = handler.previous_question_options
-        handler_object['correct_answer'] = correct_answer
-        handler_object['picked_answer'] = answer
+        # handler_object = {}
+        # handler_object['question'] = handler.previous_question.question
+        # handler_object['options'] = handler.previous_question_options
+        # handler_object['correct_answer'] = correct_answer
+        # handler_object['picked_answer'] = answer
 
-        handler.answered_questions.append(handler_object)
-        handler.previous_question_answered = True
+        # handler.answered_questions.append(handler_object)
+        # handler.previous_question_answered = True
 
     question_answer = handler.get_question()
     if not question_answer:
@@ -59,24 +62,27 @@ def questions():
 @main.route('/quiz/submit', methods=["POST"])
 def new_question():
     print(request.json)
-    handler = users.get_user()
+    handler = QuestionHandler()
     answer = request.json.get('value')
     correct_answer = handler.question_answer()
     print(answer, correct_answer)
     if answer.lower() == correct_answer.lower():
-        handler.score += 1
+        handler.save_score(True, fail=False)
+        # print('good')
+        # handler.score += 1
     else:
-        handler.failed += 1
+        handler.save_score(score=False, fail=True)
+        # handler.failed += 1
 
-    handler_object = {}
-    handler_object['question'] = handler.previous_question.question
-    handler_object['options'] = handler.previous_question_options
-    handler_object['correct_answer'] = correct_answer
-    handler_object['picked_answer'] = answer
+    # handler_object = {}
+    # handler_object['question'] = handler.previous_question.question
+    # handler_object['options'] = handler.previous_question_options
+    # handler_object['correct_answer'] = correct_answer
+    # handler_object['picked_answer'] = answer
 
-    handler.answered_questions.append(handler_object)
-    handler.previous_question_answered = True
-
+    # handler.answered_questions.append(handler_object)
+    # handler.previous_question_answered = True
+    handler.set_question_answered(correct_answer, answer)
     question_answer = handler.get_question()
 
     if not question_answer:
@@ -89,22 +95,35 @@ def new_question():
 
 @main.route('/dashboard', methods=["GET", "POST"])
 def dashboard():
-    username = session.get('username')
-    handler = users.get_user()
+
     if request.method == 'POST':
+        # del session['username']
+        del session['activities']
+        del session['prm']
         quest = request.form.get('quit')
 
         if not quest:
-            users.reset_user()
+            # users.reset_user()
             return redirect(url_for('main.questions'))
         else:
-            users.discard_user()
+            # users.discard_user()
+            del session['username']
             return redirect(url_for('main.index'))
 
+    # del session['activities']
+    username = session.get('username')
     if not username:
         return redirect(url_for('main.index'))
 
-    return render_template('dashboard.html', score=handler.score, failed=handler.failed, questions=handler.answered_questions)
+    handler = QuestionHandler()
+    score, failed = handler.get_scores()
+    answered_questions = handler.get_answered_q()
+    # del session['activities']
+
+    # if not username:
+    #     return redirect(url_for('main.index'))
+
+    return render_template('dashboard.html', score=score, failed=failed, questions=answered_questions)
 
 
 @main.route('/contribute', methods=["GET", "POST"])

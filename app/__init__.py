@@ -1,10 +1,10 @@
 from flask import Flask
-from .main.utils import UsersHandler
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
 
+# from .main.utils import UsersHandler
 def create_app():
     app = Flask(__name__)
     app.secret_key = 'o9rew908qre3qr3$TEw3qejrewqopreREWQr'
