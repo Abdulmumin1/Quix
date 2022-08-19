@@ -2,7 +2,7 @@ from . import main
 from flask import render_template, session, redirect, jsonify, url_for, request, session
 from .utils import UsersHandler, update_json, QuestionHandler
 
-users = UsersHandler()
+# users = UsersHandler()
 
 
 @main.route('/', methods=["GET", "POST"])
@@ -11,7 +11,7 @@ def index():
         username = request.form.get('namefield', '')
         if username:
             session['username'] = username
-            users.add_user()
+            # users.add_user()
             return redirect(url_for('main.questions'))
 
     username = session.get('username')
