@@ -6,7 +6,7 @@
 
 {% if not qs %}
 <section>
-    <form method="post" class="container shadow-lg p-3 rounded-3">
+    <form method="post" class="container shadow-lg p-3 rounded-card">
         <div class="d-flex justify-content-between">
             <h2>Contribute</h2>
             <input type="submit" value="submit" class="btn btn-info mb-3"/>
@@ -46,7 +46,7 @@ const addOption = () => {
 {% else %}
 
 <aside>
-<div class=" border-3 shadow-lg rounded-3 p-5 w-100 bg-body my-3 position-relative">
+<div class=" border-3 shadow-lg rounded-card p-5 w-100 bg-body my-3 position-relative">
 	<div class="row">
 		<div class="col-lg ">
 			<span class="badge p-2 rounded-2 bg-info share text-dark ">
@@ -62,7 +62,7 @@ const addOption = () => {
 				{% for option in ans %}
 				    
 					{% if option != ""%}
-				<input type="button"  value="{{ option }}" name="a" class='btn btn-info mb-3 answer-button'>
+				<input type="button"  value="{{ option }}" name="a" class='btn rounded-card btn-info mb-3 answer-button'>
 					{% endif %}
 				{% endfor %}
             </div>

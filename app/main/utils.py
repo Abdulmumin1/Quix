@@ -190,7 +190,7 @@ class QuestionHandler():
         session['prm'] = json.dumps(data)
 
     def get_scores(self):
-        data = session['activities']
+        data = session['prm']
         data = json.loads(data)
         return data['score'], data['failed']
 
