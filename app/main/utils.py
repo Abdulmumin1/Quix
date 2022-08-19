@@ -73,7 +73,7 @@ class QuestionHandler():
             data = json.loads(data)
             # self.load_json()
             if not data['question_answered']:
-                # q_id = data['q_id']
+                q_id = data['q_id']
                 question = self.return_question(data["q_id"])
             else:
                 question, q_id = self.random_question()
