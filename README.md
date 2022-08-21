@@ -1,8 +1,8 @@
 # Quix
 
-a trivia quiz website
+a trivia quiz website <a href="https://quiix.herokuapp.com">visit site</a>
 
-<a href="https://quiix.herokuapp.com">visit site</a>
+![appimage](https://github.com/Abdulmumin1/Qiux/app/static/assets/app_image.png)
 
 ## Techonologies
 
