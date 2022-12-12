@@ -1,6 +1,6 @@
 # Quix
 
-Quiz is a trivia quiz [website](https://quiix.herokuapp.com) built with python flask framework. 
+Quix is a trivia quiz [website](https://quix.onrender.com) built with python flask framework. 
 
 ![appimage](app/static/assets/app_image.png)
 
@@ -13,6 +13,8 @@ Quiz is a trivia quiz [website](https://quiix.herokuapp.com) built with python f
 <!-- [<img src="https://img.shields.io/badge/flask-red.svg?logo=LOGO">](LINK) -->
 
 # Contribute
-It OK, you can always add questions to the database, it counts! 
+Code contributions and no-code contributions are welcome. 
 
-visit [quiix.herokuapp.com/contribute](https://quiix.herokuapp.com/contribute) for more info
+you can always add questions to the database, it counts! 
+
+visit [quix.onrender.com/contribute](https://quix.onrender.com/contribute) for more info
