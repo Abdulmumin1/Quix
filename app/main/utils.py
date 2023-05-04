@@ -27,7 +27,7 @@ class QuestionHandler():
     def random_question(self):
         data = session.get('prm', None)
         if not data:
-            value = random.randint(1, 42)
+            value = random.randint(1, 82)
             self.create_a_index()
             # self.load_json()
             self.add_q(value)
@@ -43,7 +43,7 @@ class QuestionHandler():
         if len(data['attended_index']) >= 10:
             return None, None
 
-        value = random.randint(1, 42)
+        value = random.randint(1, 82)
 
         if value in data["attended_index"]:
             return self.random_question()

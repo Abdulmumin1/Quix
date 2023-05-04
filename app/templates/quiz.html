@@ -1,73 +1,121 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %}Quix{% endblock %} {% block nav %}
 
-{% block title %}Quix{% endblock %}
+<li class="nav-item">
+  <a href="{{url_for('main.dashboard')}}" class="nav-link btn text-danger"
+    >Quit</a
+  >
+</li>
+<li class="nav-item">
+  <a href="#" class="nav-link">
+    <i class="p-2 rounded-2">{{username}}</i>
+  </a>
+</li>
+<li class="nav-item">
+  <input
+    type="button"
+    class="btn btn-info"
+    value="snap"
+    onclick="to_image('quiz_area')"
+  />
+</li>
 
-{% block nav %}
+{% endblock nav%} {% block content %}
+<div class="d-flex flex-column mb-3" id="quiz_area">
+  <div
+    class="border-3 shadow-lg rounded-card p-5 w-100 bg-body my-3 position-relative"
+  >
+    <div class="row">
+      <div class="col-lg text-light">
+        <span class="badge p-2 share text-dark">
+          <a
+            class="text-decoration-none text-dark"
+            target="_"
+            href="https://twitter.com/intent/tweet?text={{qs}}"
+          >
+            Tweet</a
+          >
+        </span>
+        <p id="question" class="my-0 py-2 mx-0 text-dark">{{ qs }}</p>
+      </div>
 
-	<li class="nav-item">
-		<a href="{{url_for('main.dashboard')}}" class="nav-link btn text-danger">Quit</a>
-	</li>
-	<li class="nav-item">
-		<a href="#" class="nav-link">
-			<i class="p-2 rounded-2">{{username}}</i>
-		</a>
-	</li>
-				
-{% endblock nav%}
+      <div class="col">
+        <div class="d-flex flex-column" id="button_area">
+          {% for option in ans %} {% if option != ""%}
+          <input
+            type="submit"
+            onclick="submit_question('{{ option }}')"
+            value="{{ option }}"
+            name="a"
+            class="btn btn-info mb-3 rounded-card"
+          />
+          {% endif %} {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
 
-{% block content %}
-<div class="d-flex flex-column mb-3" id="quiz_area"> 
-<div class=" border-3 shadow-lg rounded-card p-5 w-100 bg-body my-3 position-relative">
-	<div class="row">
-		<div class="col-lg text-light ">
-			<span class="badge p-2 share text-dark ">
-				<a class="text-decoration-none text-dark " target="_" href="https://twitter.com/intent/tweet?text={{qs}}"> Tweet</a>
-			</span>
-			<p id="question" class="my-0 py-2 mx-0 text-dark">
-				{{ qs }}
-			</p>
-		</div>
+  <div
+    class="container shadow-lg bg-light m-auto position-relative rounded-card px-3 d-flex justify-content-between"
+    style="width: 40%; padding-top: 12px"
+  >
+    <p class="display-6 text-success" id="answered">{{ansd_len}}</p>
+    <p class="display-6 text-danger" id="total_question">{{q_len}}</p>
+  </div>
 
-		<div class="col">
-			<div  class=" d-flex flex-column" id="button_area">
-				{% for option in ans %}
-				    
-					{% if option != ""%}
-				<input type="submit" onclick="submit_question('{{ option }}')" value="{{ option }}" name="a" class='btn btn-info mb-3 rounded-card'>
-					{% endif %}
-				{% endfor %}
-			</div>
-
-		</div>
-	</div>
-
+  <!-- Waves starts here -->
+  <div
+    style="
+      border-bottom-right-radius: 25px;
+      border-bottom-left-radius: 25px;
+      overflow: hidden;
+    "
+  >
+    <svg
+      class="waves"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28"
+      preserveAspectRatio="none"
+      shape-rendering="auto"
+    >
+      <defs>
+        <path
+          id="gentle-wave"
+          d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+        />
+      </defs>
+      <g class="parallax">
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="0"
+          fill="rgba(49, 210, 242, 0.7)"
+        />
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="3"
+          fill="rgba(49, 210, 242, 0.5)"
+        />
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="5"
+          fill="rgba(49, 210, 242, 0.3)"
+        />
+        <use
+          xlink:href="#gentle-wave"
+          x="48"
+          y="7"
+          fill="rgba(49, 210, 242, 0.1)"
+        />
+      </g>
+    </svg>
+  </div>
+  <!--Waves end-->
 </div>
-
-
-<div class="container shadow-lg bg-light m-auto position-relative rounded-card px-3 d-flex justify-content-between" style="width: 40%;padding-top: 12px;">
-	<p class="display-6 text-success" id="answered">{{ansd_len}}</p>
-	<p class="display-6 text-danger" id="total_question">{{q_len}}</p>
-</div>
-
-<!-- Waves starts here -->
-<div style="border-bottom-right-radius:25px; border-bottom-left-radius:25px;overflow:hidden;">
-<svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-<defs>
-<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-</defs>
-<g class="parallax">
-<use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(49, 210, 242, 0.7)" />
-<use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(49, 210, 242, 0.5)" />
-<use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 210, 242, 0.3)" />
-<use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(49, 210, 242, 0.1)" />
-</g>
-</svg>
-</div>
-<!--Waves end-->
-
-</div>
-<script type="text/javascript" src="{{url_for('static', filename='js/handler.js')}}">
-	
-</script>
+<script
+  type="text/javascript"
+  src="{{url_for('static', filename='js/handler.js')}}"
+></script>
 {% endblock %}

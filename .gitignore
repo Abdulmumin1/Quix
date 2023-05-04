@@ -1,2 +1,13 @@
 /app/__pycache__
 /venv
+create_q.py
+gpt_questions.py
+gpt_questions.ts
+new.json
+qquestions.db
+questions.json
+questions_under_review.json
+read_files.py
+run.sh
+ts.py
+__pycache__/
